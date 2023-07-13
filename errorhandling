@@ -1,29 +1,34 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.17;
 
-contract ErrorHandling {
-   
-    // uint public num = 0;
-    uint b=9;
+pragma solidity 0.8.18;
 
-    function testAssert(uint num) public pure{
-        assert(num!=0);
+contract errorhandling{
+
+    uint public count=0;
+
+    function testRequire(uint amount) public{
+        require(amount > 100,"Amount  greater than 100");
+        count++;
     }
 
-    function divide(uint _numerator, uint _denomenator) public pure returns (uint){
-        if(_numerator<_denomenator){
-           
-            revert("input numerator greater than denomenator");
-            
+    function testRevert(uint amount) public {
+        if(!(amount > 150)){
+            revert("Amount greater than 150");
         }
-        return _numerator/_denomenator;
-       
-
-    }
-    function mult(uint a) public view returns (uint){
-        require(a>0,"Value of a is zero ,a cannot be zero");
-        return a*b;
-
+        count++;
     }
 
+    function testAssert(uint amount) public{
+        assert(amount > 100);
+        count++;
+    }
+
+    error CustomError(uint amount, string message);
+
+    function testCustomError(uint amount) public{
+        if(amount <= 100){
+            revert CustomError(amount,"Amount should greater than 100");
+        }
+        count++;
+    }
 }
