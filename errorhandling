@@ -1,34 +1,26 @@
 // SPDX-License-Identifier: MIT
 
 pragma solidity 0.8.18;
-
 contract errorhandling{
 
-    uint public count=0;
+    uint public num;
+    uint public avg_sal;
 
-    function testRequire(uint amount) public{
-        require(amount > 100,"Amount  greater than 100");
-        count++;
+    function ErrorRequire(uint _salary) public{
+        require(_salary > 100,"Salary must be greater than 100");
+        num++;
     }
 
-    function testRevert(uint amount) public {
-        if(!(amount > 150)){
-            revert("Amount greater than 150");
+    function ErrorRevert(uint _salary, uint month) public {
+        avg_sal= _salary/month;
+        if(month == 0){
+            revert("month cannot be zero");
         }
-        count++;
+        num++;
     }
 
-    function testAssert(uint amount) public{
-        assert(amount > 100);
-        count++;
-    }
-
-    error CustomError(uint amount, string message);
-
-    function testCustomError(uint amount) public{
-        if(amount <= 100){
-            revert CustomError(amount,"Amount should greater than 100");
-        }
-        count++;
+    function ErrorAssert(uint _salary) public{
+        assert(_salary > 100);
+        num++;
     }
 }
