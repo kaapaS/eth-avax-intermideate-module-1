@@ -1,27 +1,40 @@
-# eth-avax-intermideate-module-1
 // SPDX-License-Identifier: MIT
-
+// smart contract that implements the require(), assert() and revert() statements.
 pragma solidity 0.8.18;
-contract errorhandling{
 
-    uint public num;
-    uint public avg_sal;
+contract Error_Handling_Contract {
+    uint public bal;
 
-    function ErrorRequire(uint _salary) public{
-        require(_salary > 100,"Salary must be greater than 100");
-        num++;
+    constructor() {
+        bal = 0;
     }
 
-    function ErrorRevert(uint _salary, uint month) public {
-        avg_sal= _salary/month;
-        if(month == 0){
-            revert("month cannot be zero");
+    // require() statement
+    function depositing_amount(uint _amount) external {
+        require(_amount > 0, "**-- Depositing amount must be greater than zero, please enter valid amount to deposit --**");
+        bal += _amount;
+    }
+
+    // assert() statement
+    function Return_Balance() external view returns (uint) {
+        assert(bal >= 0); 
+        return bal;
+    }
+
+    // revert() statement
+    function withdrawing_amount(uint _amount) external {
+        require(_amount > 0, "**-- Withdrawal amount must be greater than zero, please enter valid amount to withdraw --**"); 
+        if (_amount > bal) {   
+            if(bal == 0){
+                revert("**-- Balance is 0, withdrawal not possible --**");
+            }
+        revert("**-- Insufficient balance --**"); 
         }
-        num++;
+        else {
+            bal -= _amount;
+        }
     }
 
-    function ErrorAssert(uint _salary) public{
-        assert(_salary > 100);
-        num++;
-    }
 }
+
+this code has been used to create smart contract for the asked statements
