@@ -38,3 +38,4 @@ contract Error_Handling_Contract {
 }
 
 this code has been used to create smart contract for the asked statements
+refer this video for explanation of the given code https://www.loom.com/share/c056a05048fd4d5f894836344f52df9f
