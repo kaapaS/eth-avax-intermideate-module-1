@@ -1,41 +1,40 @@
 // SPDX-License-Identifier: MIT
-// smart contract that implements the require(), assert() and revert() statements.
-pragma solidity 0.8.18;
+pragma solidity ^0.8.0;
 
-contract Error_Handling_Contract {
-    uint public bal;
+contract Registration {
+    mapping(address => bool) public registeredUsersList;
+    uint AddressCount=0;
+    uint maxAddress=2;
 
-    constructor() {
-        bal = 0;
+    
+    //require() statement
+    function Register_the_address() public {
+        require(!registeredUsersList[msg.sender], "**-- This address has been already registered --**");
+        registeredUsersList[msg.sender] = true;
+        AddressCount+=1;
     }
-
-    // require() statement
-    function depositing_amount(uint _amount) external {
-        require(_amount > 0, "**-- Depositing amount must be greater than zero, please enter valid amount to deposit --**");
-        bal += _amount;
+    function unregister_the_address() public {
+        require(registeredUsersList[msg.sender], "**-- Not Registered!!, Register yourself before proceeding --**");
+        registeredUsersList[msg.sender] = false;
+        AddressCount-=1;
     }
-
-    // assert() statement
-    function Return_Balance() external view returns (uint) {
-        assert(bal >= 0); 
-        return bal;
+    
+    //assert() statement
+    function Assert() public view  {      
+        assert(AddressCount >= maxAddress ); 
+        revert("**-- No more user can be registered --**");
     }
-
-    // revert() statement
-    function withdrawing_amount(uint _amount) external {
-        require(_amount > 0, "**-- Withdrawal amount must be greater than zero, please enter valid amount to withdraw --**"); 
-        if (_amount > bal) {   
-            if(bal == 0){
-                revert("**-- Balance is 0, withdrawal not possible --**");
+    
+    //revert() statement
+    function Revert() public view {
+        if(AddressCount==0){
+                revert("**--  Please register some address, List is empty --**");
             }
-        revert("**-- Insufficient balance --**"); 
-        }
-        else {
-            bal -= _amount;
+        if (maxAddress <= AddressCount) {
+            revert("**--  Please do not register more users, list is full --**");
         }
     }
-
 }
 
-this code has been used to create smart contract for the asked statements
-refer this video for explanation of the given code https://www.loom.com/share/c056a05048fd4d5f894836344f52df9f
+In this code it has been explaned about the smart contract created using require(), assert(), and revert() statements.
+for detailed explanation of this, refer the video link https://www.loom.com/share/c7782333ca404f1782c6590165fcc0c7
