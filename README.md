@@ -37,4 +37,3 @@ contract Registration {
 }
 
 In this code it has been explaned about the smart contract created using require(), assert(), and revert() statements.
-for detailed explanation of this, refer the video link https://www.loom.com/share/c7782333ca404f1782c6590165fcc0c7
